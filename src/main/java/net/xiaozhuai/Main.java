@@ -7,14 +7,31 @@ public class Main {
 
     private static int totalSucTimes = 0;
     private static int totalFailTimes = 0;
-    private final static int THREAD_POOL_SIZE = 32;
+    private static int threadPoolSize = 32;
     private final static Object lock = new Object();
+    private static String inviteUrl;
 
 
     public static void main(String[] args) {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        for (int i = 0; i < THREAD_POOL_SIZE; i++) {
+        if (args.length == 0 || args.length > 2) {
+            printUsage();
+            return;
+        }
+
+        inviteUrl = args[0];
+
+        if (args.length == 2) {
+            try {
+                threadPoolSize = Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                printUsage();
+                return;
+            }
+        }
+
+        ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
+        for (int i = 0; i < threadPoolSize; i++) {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -26,7 +43,7 @@ public class Main {
                             mailHelper.refresh();
                             log_debug("email: " + mailHelper.email);
 
-                            processOnHelper.init("https://www.processon.com/i/57d6182fe4b08cbf6cf59514");
+                            processOnHelper.init(inviteUrl);
 
                             if (!processOnHelper.sign(mailHelper.email)) {
                                 log_debug("sign ProcessOn failed");
@@ -68,6 +85,13 @@ public class Main {
                 }
             });
         }
+    }
+
+    private static void printUsage() {
+        System.out.println("ProcessOn Cheater");
+        System.out.println("Usage:");
+        System.out.println("  java -jar processon_cheater.jar [inviteUrl]");
+        System.out.println("  java -jar processon_cheater.jar [inviteUrl] [threadPoolSize]");
     }
 
     private static void log_debug(String line) {
