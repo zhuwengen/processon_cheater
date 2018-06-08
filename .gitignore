@@ -1,6 +1,9 @@
 .idea
 out
 .gradle
-build
+build/*
+!build/libs
+build/libs/*
+!build/libs/*.jar
 *~
 .DS_Store
