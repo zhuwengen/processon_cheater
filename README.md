@@ -44,3 +44,7 @@ java -jar processon_cheater.jar [你的邀请链接] [线程池大小]
 # 下载
 
 [build/libs/processon_cheater.jar](build/libs/processon_cheater.jar)
+
+**WARNING** 小心使用，别太过分了，够用就行了，暂不清楚有没有封号的风险。
+
+本项目意在技术实践交流，如有侵权，请联系我删除。
