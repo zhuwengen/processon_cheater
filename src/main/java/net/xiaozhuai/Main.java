@@ -40,12 +40,12 @@ public class Main {
                             MailHelper mailHelper = new MailHelper();
                             ProcessOnHelper processOnHelper = new ProcessOnHelper();
 
-                            mailHelper.refresh();
-                            log_debug("email: " + mailHelper.email);
+                            String email = mailHelper.getMailAddr();
+                            log_debug("email: " + email);
 
                             processOnHelper.init(inviteUrl);
 
-                            if (!processOnHelper.sign(mailHelper.email)) {
+                            if (!processOnHelper.sign(email)) {
                                 log_debug("sign ProcessOn failed");
                                 return;
                             }
@@ -54,7 +54,7 @@ public class Main {
                             String mailUrl = null;
                             for (int i = 0; i < 50; i++) {
                                 log_debug("try times: " + i);
-                                mailUrl = mailHelper.refresh();
+                                mailUrl = mailHelper.getVerifyMailUrl();
                                 if (mailUrl != null) break;
                                 Thread.sleep(1000);
                             }
