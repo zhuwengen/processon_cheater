@@ -47,6 +47,7 @@ public class Main {
 
                             if (!processOnHelper.sign(email)) {
                                 log_debug("sign ProcessOn failed");
+                                incFailTimes();
                                 return;
                             }
                             log_debug("sign ProcessOn suc");
@@ -60,6 +61,7 @@ public class Main {
                             }
                             if (mailUrl == null) {
                                 log_debug("mail not found");
+                                incFailTimes();
                                 return;
                             }
                             log_debug("mailUrl: " + mailUrl);
@@ -68,13 +70,16 @@ public class Main {
                             String verifyUrl = mailHelper.getVerifyUrl(mailUrl);
                             if (verifyUrl == null) {
                                 log_debug("verifyUrl not found");
+                                incFailTimes();
                                 return;
                             }
                             log_debug("verifyUrl: " + verifyUrl);
 
                             if (processOnHelper.verify(verifyUrl)) {
+                                log_debug("verify suc");
                                 incSucTimes();
                             } else {
+                                log_debug("verify failed");
                                 incFailTimes();
                             }
                         } catch (Exception e) {
