@@ -27,7 +27,7 @@ public class MailHelper {
         String text = response.body().string();
         response.close();
         Document doc = Jsoup.parse(text);
-        Elements elements = doc.select("table#mails tbody td a");
+        Elements elements = doc.select(".col-box a");
         if (elements.size() > 0) {
             return elements.first().attr("href");
         }

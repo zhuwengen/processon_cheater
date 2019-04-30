@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 
 public class ProcessOnHelper {
 
@@ -16,12 +16,19 @@ public class ProcessOnHelper {
         response.close();
     }
 
-    public boolean sign(String email) throws IOException {
+
+
+    public boolean sign(String email,String signup) throws IOException {
+        String fullname = randomString(12);
+        String pass = randomString(12);
+        String [] randstr = signup.split(",");
         Response response = OkHttpHelper.post(client, "https://www.processon.com/signup/submit",
                 new FormBody.Builder()
                         .add("email", email)
-                        .add("pass", randomString(12))
-                        .add("fullname", randomString(12))
+                        .add("pass", pass)
+                        .add("fullname", fullname)
+                        .add("signup_ticket", randstr[0])
+                        .add("randstr", randstr[1])
                         .build()
         );
         String text = response.body().string();

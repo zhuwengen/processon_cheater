@@ -29,3 +29,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.10.0'
     compile 'org.jsoup:jsoup:1.11.3'
 }
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
